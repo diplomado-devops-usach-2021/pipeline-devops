@@ -23,12 +23,13 @@ def call(){
 				steps{
 					script{
 						println 'Pipeline'
-						
-            if (params.buildTool == "gradle") {
-                gradle()
-            } else {
-                maven()
-            }
+
+						if (params.buildTool == "gradle") {
+							gradle(verifyBranchName())
+						} else {
+							maven(verifyBranchName())
+						}
+
 					}
 				}
 			}
@@ -46,6 +47,15 @@ def call(){
 		}
 	}
 
+}
+
+
+def verifyBranchName(){
+	if (env.GIT_BRANCH.contains('feature-') || env.GIT_BRANCH.contains('develop')){
+		return 'CI'
+	} else {
+		return 'CD'
+	}
 }
 
 return this;
