@@ -6,32 +6,38 @@
 
 def call(String pipelineType){
 
-  figlet pipelineType
+  figlet 'Maven'
 
-  stage('Compile') {
-    STAGE = env.STAGE_NAME
-    sh './mvnw clean compile -e'
-  }
+  if (pipelineType == 'CI'){
+    figlet 'Integracion Continua'
 
-  stage('Test') {
-    STAGE = env.STAGE_NAME
-    sh './mvnw clean test -e'
-  }
+    stage('Compile') {
+      STAGE = env.STAGE_NAME
+      sh './mvnw clean compile -e'
+    }
 
-  stage('Jar') {
-    STAGE = env.STAGE_NAME
-    sh './mvnw clean package -e'
-  }
+    stage('Test') {
+      STAGE = env.STAGE_NAME
+      sh './mvnw clean test -e'
+    }
 
-  stage('Run') {
-    STAGE = env.STAGE_NAME
-    sh 'nohup bash mvnw spring-boot:run &'
-    sleep 20
-  }
-  
-  stage('TestApp') {
-    STAGE = env.STAGE_NAME
-    sh "curl -X GET 'http://localhost:8081/rest/mscovid/test?msg=testing'"
+    stage('Jar') {
+      STAGE = env.STAGE_NAME
+      sh './mvnw clean package -e'
+    }
+  } else {
+    figlet 'Delivery Continuo'
+    
+    stage('Run') {
+      STAGE = env.STAGE_NAME
+      sh 'nohup bash mvnw spring-boot:run &'
+      sleep 20
+    }
+    
+    stage('TestApp') {
+      STAGE = env.STAGE_NAME
+      sh "curl -X GET 'http://localhost:8081/rest/mscovid/test?msg=testing'"
+    }
   }
 
 }
