@@ -54,6 +54,52 @@ def call(String pipelineType){
 			STAGE = env.STAGE_NAME
 			figlet "Stage: ${env.STAGE_NAME}"
 		}
+		stage('Deploy QA'){
+			STAGE = env.STAGE_NAME
+			figlet "Stage: ${env.STAGE_NAME}"
+
+			println "${env.STAGE_NAME} realizado con exito"
+		}
+		stage('Test QA'){
+			STAGE = env.STAGE_NAME
+			figlet "Stage: ${env.STAGE_NAME}"
+
+			println "${env.STAGE_NAME} realizado con exito"
+		}
+
+		input 'Aprobacion para despliegue en Produccion'
+		
+		stage('Deploy PROD'){
+			STAGE = env.STAGE_NAME
+			figlet "Stage: ${env.STAGE_NAME}"
+
+			println "${env.STAGE_NAME} realizado con exito"
+		}
+		stage('Test PROD'){
+			STAGE = env.STAGE_NAME
+			figlet "Stage: ${env.STAGE_NAME}"
+
+			println "${env.STAGE_NAME} realizado con exito"
+		}
+		stage('Merge to Master'){
+			STAGE = env.STAGE_NAME
+			figlet "Stage: ${env.STAGE_NAME}"
+
+			println "${env.STAGE_NAME} realizado con exito"
+		}
+		stage('Merge to Develop'){
+			STAGE = env.STAGE_NAME
+			figlet "Stage: ${env.STAGE_NAME}"
+
+			println "${env.STAGE_NAME} realizado con exito"
+		}
+		stage('Tag to Master'){
+			STAGE = env.STAGE_NAME
+			figlet "Stage: ${env.STAGE_NAME}"
+
+			println "${env.STAGE_NAME} realizado con exito"
+		}
+
 	}
 }
 
