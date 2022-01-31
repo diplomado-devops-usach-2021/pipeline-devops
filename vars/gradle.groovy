@@ -88,7 +88,7 @@ def call(String pipelineType){
 			figlet "Stage: ${env.STAGE_NAME}"
 
 			def git = new helpers.Git()
-			git.merge()
+			git.merge("${env.GIT_BRANCH}",'main')
 
 			println "${env.STAGE_NAME} realizado con exito"
 		}
@@ -97,7 +97,7 @@ def call(String pipelineType){
 			figlet "Stage: ${env.STAGE_NAME}"
 
 			def git = new helpers.Git()
-			git.merge()
+			git.merge("${env.GIT_BRANCH}",'develop')
 
 			println "${env.STAGE_NAME} realizado con exito"
 		}
@@ -106,7 +106,7 @@ def call(String pipelineType){
 			figlet "Stage: ${env.STAGE_NAME}"
 
 			def git = new helpers.Git()
-			git.tag()
+			git.tag(env.GIT_BRANCH)
 
 			println "${env.STAGE_NAME} realizado con exito"
 		}
