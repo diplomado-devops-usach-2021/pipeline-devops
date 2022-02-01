@@ -8,7 +8,6 @@ def merge(String ramaOrigen, String ramaDestino){
 
 	sh """
 		git merge ${ramaOrigen}
-		git commit -m "Merge de ${ramaOrigen}"
 		git push origin ${ramaDestino}
 	"""
 }
