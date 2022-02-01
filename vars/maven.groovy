@@ -10,9 +10,15 @@ def call(String pipelineType){
 
   figlet 'Maven'
 
-  def git = helpers.Git()
+  stage('Tag to Master'){
+    STAGE = env.STAGE_NAME
+    figlet "Stage: ${env.STAGE_NAME}"
 
-  git.tag(env.GIT_LOCAL_BRANCH)
+    def git = new helpers.Git()
+    git.tag(env.GIT_LOCAL_BRANCH)
+
+    println "${env.STAGE_NAME} realizado con exito"
+  }
 
 
   // if (pipelineType == 'CI'){
