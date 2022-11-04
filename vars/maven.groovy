@@ -10,48 +10,43 @@ def call(String pipelineType){
 
   figlet 'Maven'
 
-  stage('Tag to Master'){
+  // stage('Tag to Master'){
+  //   STAGE = env.STAGE_NAME
+  //   figlet "Stage: ${env.STAGE_NAME}"
+
+  //   def git = new helpers.Git()
+  //   git.tag(env.GIT_LOCAL_BRANCH)
+
+  //   println "${env.STAGE_NAME} realizado con exito"
+  // }
+
+  figlet 'Integracion Continua'
+
+  stage('Compile') {
     STAGE = env.STAGE_NAME
-    figlet "Stage: ${env.STAGE_NAME}"
-
-    def git = new helpers.Git()
-    git.tag(env.GIT_LOCAL_BRANCH)
-
-    println "${env.STAGE_NAME} realizado con exito"
+    sh './mvnw clean compile -e'
   }
 
+  stage('Test') {
+    STAGE = env.STAGE_NAME
+    sh './mvnw clean test -e'
+  }
 
-  // if (pipelineType == 'CI'){
-  //   figlet 'Integracion Continua'
-
-  //   stage('Compile') {
-  //     STAGE = env.STAGE_NAME
-  //     sh './mvnw clean compile -e'
-  //   }
-
-  //   stage('Test') {
-  //     STAGE = env.STAGE_NAME
-  //     sh './mvnw clean test -e'
-  //   }
-
-  //   stage('Jar') {
-  //     STAGE = env.STAGE_NAME
-  //     sh './mvnw clean package -e'
-  //   }
-  // } else {
-  //   figlet 'Delivery Continuo'
-    
-  //   stage('Run') {
-  //     STAGE = env.STAGE_NAME
-  //     sh 'nohup bash mvnw spring-boot:run &'
-  //     sleep 20
-  //   }
-    
-  //   stage('TestApp') {
-  //     STAGE = env.STAGE_NAME
-  //     sh "curl -X GET 'http://localhost:8081/rest/mscovid/test?msg=testing'"
-  //   }
-  // }
+  stage('Jar') {
+    STAGE = env.STAGE_NAME
+    sh './mvnw clean package -e'
+  }
+  
+  stage('Run') {
+    STAGE = env.STAGE_NAME
+    sh 'nohup bash mvnw spring-boot:run &'
+    sleep 20
+  }
+  
+  stage('TestApp') {
+    STAGE = env.STAGE_NAME
+    sh "curl -X GET 'http://localhost:8081/rest/mscovid/test?msg=testing'"
+  }
 
 }
 
